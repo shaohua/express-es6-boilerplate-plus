@@ -1,9 +1,14 @@
-import express from 'express';
-const router = express.Router();
+import home from './home';
+import users from './users';
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
-});
+export default function setRoutes(app) {
+  app.use('/', home);
+  app.use('/users', users);
 
-export default router;
+  // catch 404 and forward to error handler
+  app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+}
